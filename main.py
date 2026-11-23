@@ -27,6 +27,9 @@ def main() -> int:
     if "\n" in text:
         print("refusing: joke must be a single line", file=sys.stderr)
         return 1
+    if any(ord(ch) < 32 and ch != "\t" for ch in text):
+        print("refusing: joke contains a control character", file=sys.stderr)
+        return 1
 
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR") or "/output"
     os.makedirs(out_dir, exist_ok=True)
